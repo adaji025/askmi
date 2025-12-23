@@ -42,10 +42,14 @@ export function RegisterForm() {
 
   const validateCompany = (company: string): string => {
     if (!company.trim()) {
-      return "Company name is required";
+      return accountType === "influencer"
+        ? "Instagram handle is required"
+        : "Company name is required";
     }
     if (company.trim().length < 2) {
-      return "Company name must be at least 2 characters";
+      return accountType === "influencer"
+        ? "Instagram handle must be at least 2 characters"
+        : "Company name must be at least 2 characters";
     }
     return "";
   };
@@ -206,12 +210,16 @@ export function RegisterForm() {
 
         <div className="space-y-2">
           <Label htmlFor="company" className="text-sm font-bold text-[#8E8E8E]">
-            Company
+            {accountType === "influencer" ? "Instagram Handle" : "Company"}
           </Label>
           <Input
             id="company"
             type="text"
-            placeholder="Enter company name"
+            placeholder={
+              accountType === "influencer"
+                ? "@yourhandle"
+                : "Enter company name"
+            }
             value={formData.company}
             onChange={(e) => handleFieldChange("company", e.target.value)}
             className={`h-11 bg-white rounded-[6px] ${
