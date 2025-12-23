@@ -59,7 +59,7 @@ export function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    
+
     // Validate form before submitting
     if (!validateForm()) {
       return;
@@ -123,7 +123,9 @@ export function LoginForm() {
             value={formData.email}
             onChange={handleEmailChange}
             className={`h-11 bg-white rounded-[6px] ${
-              errors.email ? "border-destructive focus-visible:ring-destructive" : ""
+              errors.email
+                ? "border-destructive focus-visible:ring-destructive"
+                : ""
             }`}
             disabled={isLoading}
           />
@@ -146,7 +148,9 @@ export function LoginForm() {
             value={formData.password}
             onChange={handlePasswordChange}
             className={`h-11 bg-white rounded-[6px] ${
-              errors.password ? "border-destructive focus-visible:ring-destructive" : ""
+              errors.password
+                ? "border-destructive focus-visible:ring-destructive"
+                : ""
             }`}
             disabled={isLoading}
           />

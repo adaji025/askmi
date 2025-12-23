@@ -1,16 +1,16 @@
-import { Routes, Route, Navigate } from 'react-router'
-import { AuthProvider, useAuth } from '@/contexts/AuthContext'
-import ProtectedRoute from '@/components/core/protectedRoute'
-import PublicRoute from '@/components/core/publicRoute'
-import DashboardLayout from '@/components/core/dashboard/dashboard-layout'
-import Login from '@/pages/auth/Login'
-import Dashboard from '@/pages/dashboard'
-import Register from './pages/auth/Register'
+import { Routes, Route, Navigate } from "react-router";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import ProtectedRoute from "@/components/core/protectedRoute";
+import PublicRoute from "@/components/core/publicRoute";
+import DashboardLayout from "@/components/core/dashboard/dashboard-layout";
+import Login from "@/pages/auth/Login";
+import Dashboard from "@/pages/dashboard";
+import Register from "./pages/auth/Register";
 
 // Component to handle root path redirect
 const RootRedirect = () => {
-  const { isAuthenticated, isLoading } = useAuth()
-  
+  const { isAuthenticated, isLoading } = useAuth();
+
   if (isLoading) {
     return (
       <div className="flex min-h-svh items-center justify-center">
@@ -19,11 +19,11 @@ const RootRedirect = () => {
           <p className="mt-4 text-sm text-muted-foreground">Loading...</p>
         </div>
       </div>
-    )
+    );
   }
-  
-  return <Navigate to={isAuthenticated ? '/dashboard' : '/login'} replace />
-}
+
+  return <Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />;
+};
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
       <Routes>
         {/* Root path - redirect based on auth status */}
         <Route path="/" element={<RootRedirect />} />
-        
+
         {/* Unauthenticated routes (redirects to dashboard if already logged in) */}
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<Login />} />
@@ -49,7 +49,7 @@ function App() {
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;

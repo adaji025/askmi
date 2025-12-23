@@ -1,8 +1,8 @@
-import { Navigate, Outlet } from 'react-router'
-import { useAuth } from '@/contexts/AuthContext'
+import { Navigate, Outlet } from "react-router";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ProtectedRoute = () => {
-  const { isAuthenticated, isLoading } = useAuth()
+  const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -12,15 +12,14 @@ const ProtectedRoute = () => {
           <p className="mt-4 text-sm text-muted-foreground">Loading...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />
-}
+  return <Outlet />;
+};
 
-export default ProtectedRoute
-
+export default ProtectedRoute;
