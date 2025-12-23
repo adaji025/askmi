@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const userData = { id: '1', email }
     setUser(userData)
     setIsAuthenticated(true)
-    localStorage.setItem('auth', JSON.stringify({ user: userData }))
+    localStorage.setItem('askmi-auth', JSON.stringify({ user: userData }))
   }
 
   const logout = () => {
