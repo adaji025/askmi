@@ -1,3 +1,4 @@
+import { Outlet } from 'react-router'
 import {
     SidebarInset,
     SidebarProvider,
@@ -6,10 +7,10 @@ import { AppSidebar } from "./app-sidebar"
 import { SiteHeader } from "./site-header"
 
 
-export default function Page({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout() {
     return (
         <SidebarProvider
-            style={
+            style={ 
                 {
                     "--sidebar-width": "calc(var(--spacing) * 72)",
                     "--header-height": "calc(var(--spacing) * 12)",
@@ -20,7 +21,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
             <SidebarInset>
                 <SiteHeader />
                 <div className="flex flex-1 flex-col">
-                    {children}
+                    <Outlet />
                 </div>
             </SidebarInset>
         </SidebarProvider>

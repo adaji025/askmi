@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router'
 import { AuthProvider, useAuth } from '@/contexts/AuthContext'
 import ProtectedRoute from '@/components/core/protectedRoute'
 import PublicRoute from '@/components/core/publicRoute'
+import DashboardLayout from '@/components/core/dashboard/dashboard-layout'
 import Login from '@/pages/auth/Login'
 import Dashboard from '@/pages/dashboard'
 import Register from './pages/auth/Register'
@@ -39,7 +40,9 @@ function App() {
 
         {/* Authenticated routes (redirects to login if not authenticated) */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
         </Route>
 
         {/* Catch all - redirect to login */}
