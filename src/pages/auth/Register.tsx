@@ -1,4 +1,4 @@
-import AuthLayout from "@/components/core/auth/layout"
+import AuthLayout from "@/components/core/auth/auth-layout"
 
 const Register = () => {
     return (

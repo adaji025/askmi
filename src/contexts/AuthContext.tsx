@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkAuth = () => {
       try {
-        const storedAuth = localStorage.getItem('auth')
+        const storedAuth = localStorage.getItem('askmi-auth')
         if (storedAuth) {
           const authData = JSON.parse(storedAuth)
           setIsAuthenticated(true)
