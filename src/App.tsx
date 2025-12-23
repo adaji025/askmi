@@ -1,21 +1,22 @@
 import { Routes, Route, Navigate } from 'react-router'
 import { AuthProvider } from '@/contexts/AuthContext'
-import ProtectedRoute from '@/components/core/ProtectedRoute'
-import PublicRoute from '@/components/core/PublicRoute'
-import Home from '@/pages/Home'
+import ProtectedRoute from '@/components/core/protectedRoute'
+import PublicRoute from '@/components/core/publicRoute'
 import Login from '@/pages/auth/Login'
 import Dashboard from '@/pages/dashboard'
+import Register from './pages/auth/Register'
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Login />} />
         
         {/* Unauthenticated routes (redirects to dashboard if already logged in) */}
         <Route element={<PublicRoute />}>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/sign-up" element={<Register />} />
         </Route>
 
         {/* Authenticated routes (redirects to login if not authenticated) */}
