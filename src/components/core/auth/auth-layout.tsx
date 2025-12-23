@@ -17,12 +17,12 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
 
                 {/* Features */}
                 <div className="flex gap-8">
-                    <div className="relative pl-4">
+                    <div className="relative pl-4 border-l-4 border-[#2563EB]">
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-full"></div>
                         <div className="text-3xl font-bold mb-1">24/7</div>
                         <div className="text-sm text-gray-400">Customer support</div>
                     </div>
-                    <div className="relative pl-4">
+                    <div className="relative pl-4 border-l-4 border-[#2563EB]">
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-full"></div>
                         <div className="text-3xl font-bold mb-1">Free trial</div>
                         <div className="text-sm text-gray-400">7 days free trial</div>

@@ -19,19 +19,132 @@ export function RegisterForm() {
     password: "",
     confirmPassword: "",
   });
-  const nagigate = useNavigate();
-  const handleSubmit = (e: React.FormEvent) => {
+  const [errors, setErrors] = useState({
+    fullName: "",
+    company: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const validateFullName = (fullName: string): string => {
+    if (!fullName.trim()) {
+      return "Full name is required";
+    }
+    if (fullName.trim().length < 2) {
+      return "Full name must be at least 2 characters";
+    }
+    return "";
+  };
+
+  const validateCompany = (company: string): string => {
+    if (!company.trim()) {
+      return "Company name is required";
+    }
+    if (company.trim().length < 2) {
+      return "Company name must be at least 2 characters";
+    }
+    return "";
+  };
+
+  const validateEmail = (email: string): string => {
+    if (!email.trim()) {
+      return "Email is required";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return "Please enter a valid email address";
+    }
+    return "";
+  };
+
+  const validatePassword = (password: string): string => {
+    if (!password) {
+      return "Password is required";
+    }
+    if (password.length < 8) {
+      return "Password must be at least 8 characters";
+    }
+    return "";
+  };
+
+  const validateConfirmPassword = (confirmPassword: string, password: string): string => {
+    if (!confirmPassword) {
+      return "Please confirm your password";
+    }
+    if (confirmPassword !== password) {
+      return "Passwords do not match";
+    }
+    return "";
+  };
+
+  const validateForm = (): boolean => {
+    const fullNameError = validateFullName(formData.fullName);
+    const companyError = validateCompany(formData.company);
+    const emailError = validateEmail(formData.email);
+    const passwordError = validatePassword(formData.password);
+    const confirmPasswordError = validateConfirmPassword(
+      formData.confirmPassword,
+      formData.password
+    );
+
+    setErrors({
+      fullName: fullNameError,
+      company: companyError,
+      email: emailError,
+      password: passwordError,
+      confirmPassword: confirmPasswordError,
+    });
+
+    return !fullNameError && !companyError && !emailError && !passwordError && !confirmPasswordError;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", { accountType, ...formData });
+    setError("");
+
+    // Validate form before submitting
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // TODO: Replace with actual registration API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log("Form submitted:", { accountType, ...formData });
+      // Navigate to login or dashboard after successful registration
+      navigate("/login");
+    } catch (err) {
+      setError("Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFieldChange = (field: keyof typeof formData, value: string) => {
+    setFormData({ ...formData, [field]: value });
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors({ ...errors, [field]: "" });
+    }
+    // Clear confirm password error if password changes
+    if (field === "password" && errors.confirmPassword) {
+      setErrors({ ...errors, confirmPassword: "" });
+    }
   };
 
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-8">
-        <h1 className="text-[32px] font-bold mb-2 text-blck">
+        <h1 className="text-[32px] text-center font-bold mb-2 text-blck">
           Create your account
         </h1>
-        <p className="text-base text-[#5D6A6B]">
+        <p className="text-base text-center text-[#5D6A6B]">
           Start your journey with us today
         </p>
       </div>
@@ -62,6 +175,12 @@ export function RegisterForm() {
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
+        {error && (
+          <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+            {error}
+          </div>
+        )}
+
         <div className="space-y-2">
           <Label
             htmlFor="fullName"
@@ -74,11 +193,15 @@ export function RegisterForm() {
             type="text"
             placeholder="e.g John Doe Gabriel"
             value={formData.fullName}
-            onChange={(e) =>
-              setFormData({ ...formData, fullName: e.target.value })
-            }
-            className="h-11 bg-white rounded-[6px]"
+            onChange={(e) => handleFieldChange("fullName", e.target.value)}
+            className={`h-11 bg-white rounded-[6px] ${
+              errors.fullName ? "border-destructive focus-visible:ring-destructive" : ""
+            }`}
+            disabled={isLoading}
           />
+          {errors.fullName && (
+            <p className="text-sm text-destructive mt-1">{errors.fullName}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -90,11 +213,15 @@ export function RegisterForm() {
             type="text"
             placeholder="Enter company name"
             value={formData.company}
-            onChange={(e) =>
-              setFormData({ ...formData, company: e.target.value })
-            }
-            className="h-11 bg-white rounded-[6px]"
+            onChange={(e) => handleFieldChange("company", e.target.value)}
+            className={`h-11 bg-white rounded-[6px] ${
+              errors.company ? "border-destructive focus-visible:ring-destructive" : ""
+            }`}
+            disabled={isLoading}
           />
+          {errors.company && (
+            <p className="text-sm text-destructive mt-1">{errors.company}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -106,11 +233,15 @@ export function RegisterForm() {
             type="email"
             placeholder="youremail@example.com"
             value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-            className="h-11 bg-white rounded-[6px]"
+            onChange={(e) => handleFieldChange("email", e.target.value)}
+            className={`h-11 bg-white rounded-[6px] ${
+              errors.email ? "border-destructive focus-visible:ring-destructive" : ""
+            }`}
+            disabled={isLoading}
           />
+          {errors.email && (
+            <p className="text-sm text-destructive mt-1">{errors.email}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -125,11 +256,15 @@ export function RegisterForm() {
             type="password"
             placeholder="Create strong password"
             value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-            className="h-11 bg-white rounded-[6px]"
+            onChange={(e) => handleFieldChange("password", e.target.value)}
+            className={`h-11 bg-white rounded-[6px] ${
+              errors.password ? "border-destructive focus-visible:ring-destructive" : ""
+            }`}
+            disabled={isLoading}
           />
+          {errors.password && (
+            <p className="text-sm text-destructive mt-1">{errors.password}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -144,25 +279,30 @@ export function RegisterForm() {
             type="password"
             placeholder="Confirm your password"
             value={formData.confirmPassword}
-            onChange={(e) =>
-              setFormData({ ...formData, confirmPassword: e.target.value })
-            }
-            className="h-11 bg-white rounded-[6px]"
+            onChange={(e) => handleFieldChange("confirmPassword", e.target.value)}
+            className={`h-11 bg-white rounded-[6px] ${
+              errors.confirmPassword ? "border-destructive focus-visible:ring-destructive" : ""
+            }`}
+            disabled={isLoading}
           />
+          {errors.confirmPassword && (
+            <p className="text-sm text-destructive mt-1">{errors.confirmPassword}</p>
+          )}
         </div>
 
         <Button
           type="submit"
           className="mt-12 rounded-[6px] w-full h-12 text-base font-medium bg-[#2563EB] hover:bg-[#2563EB]/90"
+          disabled={isLoading}
         >
-          Create account
+          {isLoading ? "Creating account..." : "Create account"}
         </Button>
       </form>
 
       <p className="text-center mt-6 text-sm text-muted-foreground">
         Already have an account?{" "}
         <span
-          onClick={() => nagigate("/login")}
+          onClick={() => navigate("/login")}
           className="text-[#8B5CF6] font-medium cursor-pointer hover:underline"
         >
           Sign in.
