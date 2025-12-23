@@ -1,11 +1,12 @@
-import AuthLayout from "@/components/core/auth/auth-layout"
+import AuthLayout from "@/components/core/auth/auth-layout";
+import { RegisterForm } from "@/components/core/auth/register-form";
 
 const Register = () => {
-    return (
-        <AuthLayout>
-            <div></div>
-        </AuthLayout>
-    )
-}
+  return (
+    <AuthLayout>
+      <RegisterForm />
+    </AuthLayout>
+  );
+};
 
-export default Register
+export default Register;

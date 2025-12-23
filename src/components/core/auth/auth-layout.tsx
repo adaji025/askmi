@@ -2,15 +2,15 @@ import Logo from "@/assets/images/svgs/askmi-logo.svg"
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="flex">
-            <div className="max-w-[474px] w-full min-h-screen bg-primary hidden lg:flex  text-white flex-col justify-between p-12 xl:p-16">
+            <div className="max-w-118.5 w-full h-screen bg-primary hidden lg:flex  text-white flex-col justify-between p-6 xl:p-10">
                 <div className="">
                     <img src={Logo} />
                 </div>
 
                 {/* Main Content */}
                 <div className="space-y-6 max-w-lg">
-                    <h2 className="text-5xl font-bold leading-tight text-balance">Start collecting insights today</h2>
-                    <p className="text-lg text-gray-300 leading-relaxed">
+                    <h2 className="text-4xl font-extrabold leading-tight text-balance">Monetize your Instagram audience</h2>
+                    <p className="text-lg text-[#E2E8F0] leading-relaxed">
                         Create surveys, launch campaigns, and get real-time data from Instagram influencers and their audiences.
                     </p>
                 </div>
@@ -29,7 +29,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 h-screen overflow-y-auto py-10 px-6 lg:px-8">
                 {children}
             </div>
         </div>
