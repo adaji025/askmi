@@ -5,11 +5,8 @@ import * as React from "react";
 import {
   IconChartBar,
   IconDashboard,
-  IconDatabase,
-  IconFileWord,
   IconFolder,
   IconListDetails,
-  IconReport,
 } from "@tabler/icons-react";
 
 import {
@@ -22,7 +19,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { NavMain } from "./nav-main";
-import { NavDocuments } from "./nav-manage";
 import { NavUser } from "./nav-user";
 
 const data = {
@@ -38,37 +34,24 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Campaigns",
-      url: "/campaigns",
+      title: "Brands",
+      url: "/brands",
       icon: IconListDetails,
     },
     {
-      title: "Surveys",
-      url: "/surveys",
+      title: "Influencers",
+      url: "/influencers",
       icon: IconFolder,
     },
     {
-      title: "Analytics",
-      url: "#",
+      title: "OCR Reviews",
+      url: "/ocr-reviews",
       icon: IconChartBar,
     },
-  ],
-
-  documents: [
     {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
+      title: "Campaigns",
+      url: "/campaigns",
+      icon: IconChartBar,
     },
   ],
 };
@@ -81,7 +64,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:p-1.5! hover:bg-transparent"
+              className="data-[slot=sidebar-menu-button]:p-1.5! hover:bg-transparent hover:border-0 hover:border-r-0 active:border-0 active:border-r-0 data-[active=true]:border-0 data-[active=true]:border-r-0"
             >
               <a href="#">
                 <img src={Logo} alt="askmi logo" className="max-w-30 h-8" />
@@ -89,10 +72,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+        <div className="text-center bg-[#302D54] p-1.5 rounded-sm text-[#8B5CF6] text-xs font-bold">
+          CONTROL CENTER
+        </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="mt-6">
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
